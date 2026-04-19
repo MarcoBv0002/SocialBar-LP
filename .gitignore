@@ -1,0 +1,20 @@
+# Claude Code internals
+.claude/
+
+# Work-in-progress / raw uploads
+uploads/
+
+# UI kit experiments y preview de design system (no son la landing)
+ui_kits/
+preview/
+
+# Skill metadata
+SKILL.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (por si se agrega build step en el futuro)
+node_modules/
+.env

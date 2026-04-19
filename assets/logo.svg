@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none">
+  <defs>
+    <linearGradient id="grd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7"></stop>
+      <stop offset="100%" stop-color="#EC4899"></stop>
+    </linearGradient>
+    <linearGradient id="grdIcon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7"></stop>
+      <stop offset="100%" stop-color="#EC4899"></stop>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"></feGaussianBlur>
+      <feMerge><feMergeNode in="coloredBlur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+  </defs>
+  
+  <rect x="4" y="36" width="8" height="20" rx="2" fill="url(#grdIcon)" opacity="0.6" filter="url(#glow)"></rect>
+  <rect x="16" y="26" width="8" height="30" rx="2" fill="url(#grdIcon)" opacity="0.8" filter="url(#glow)"></rect>
+  <rect x="28" y="14" width="8" height="42" rx="2" fill="url(#grdIcon)" filter="url(#glow)"></rect>
+  
+  <circle cx="44" cy="12" r="4" fill="#22D3EE" filter="url(#glow)"></circle>
+  
+  <text x="56" y="43" font-family="&#39;Syne&#39;, sans-serif" font-weight="800" font-size="28" fill="white" letter-spacing="-0.5">Social</text>
+  <text x="152" y="43" font-family="&#39;Syne&#39;, sans-serif" font-weight="800" font-size="28" fill="url(#grd)" letter-spacing="-0.5">Bar</text>
+</svg>
