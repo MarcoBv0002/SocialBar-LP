@@ -1,6 +1,15 @@
 // Landing.jsx — Social Bar landing page (v2: fully responsive)
 const { useState, useEffect } = React;
 
+// ── WHATSAPP ─────────────────────────────────────────────────
+const WA_NUM = '51923593150';
+const WA_MSGS = {
+  asesor:  'Hola equipo de Social Bar, les escribo por que estoy interesado en su plataforma. Me pueden brindar mayor información.',
+  reunion: 'Hola equipo de Social Bar,  estoy interesado en su plataforma. ¿Podemos tener una reunión?',
+  plan: (name) => `Hola equipo de Social Bar, estoy interesado en adquirir un plan ${name} para mi negocio. ¿Me brindan mayor detalle?`,
+};
+const openWA = (msg) => window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`, '_blank');
+
 // ── NAV ──────────────────────────────────────────────────────
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,7 +36,12 @@ function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const links = ['Producto', 'Módulos', 'Planes', 'Contacto'];
+  const links = [
+    { label: 'Producto',  href: '#producto' },
+    { label: 'Módulos',   href: '#modulos' },
+    { label: 'Planes',    href: '#planes' },
+    { label: 'Contacto',  href: null },   // abre WhatsApp
+  ];
   const navBg = scrolled || menuOpen ? 'rgba(8,8,14,0.95)' : 'transparent';
 
   return (
@@ -45,7 +59,7 @@ function Nav() {
 
         {isMobile ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <BtnPrimary size="sm">Demo</BtnPrimary>
+            <BtnPrimary size="sm" onClick={() => openWA(WA_MSGS.asesor)}>Contactar</BtnPrimary>
             <button
               onClick={() => setMenuOpen(o => !o)}
               aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
@@ -57,13 +71,16 @@ function Nav() {
           </div>
         ) : (
           <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-            {links.map(l => (
-              <a key={l} href="#" style={{ color: C.fg3, fontSize: 14, fontWeight: 500,
-                textDecoration: 'none', transition: 'color 0.2s' }}
+            {links.map(({ label, href }) => (
+              <a key={label}
+                href={href || '#'}
+                onClick={!href ? (e) => { e.preventDefault(); openWA(WA_MSGS.asesor); } : undefined}
+                style={{ color: C.fg3, fontSize: 14, fontWeight: 500,
+                  textDecoration: 'none', transition: 'color 0.2s', cursor: 'pointer' }}
                 onMouseEnter={e => e.target.style.color = '#fff'}
-                onMouseLeave={e => e.target.style.color = C.fg3}>{l}</a>
+                onMouseLeave={e => e.target.style.color = C.fg3}>{label}</a>
             ))}
-            <BtnPrimary size="sm">Solicita Demo</BtnPrimary>
+            <BtnPrimary size="sm" onClick={() => openWA(WA_MSGS.asesor)}>Contactar asesor</BtnPrimary>
           </div>
         )}
       </nav>
@@ -78,8 +95,13 @@ function Nav() {
         pointerEvents: menuOpen ? 'auto' : 'none',
         transition: 'opacity 0.25s ease',
       }}>
-        {links.map((l, i) => (
-          <a key={l} href="#" onClick={() => setMenuOpen(false)}
+        {links.map(({ label, href }, i) => (
+          <a key={label}
+            href={href || '#'}
+            onClick={(e) => {
+              if (!href) { e.preventDefault(); openWA(WA_MSGS.asesor); }
+              setMenuOpen(false);
+            }}
             style={{
               color: '#fff', fontSize: 36, fontFamily: "'Bebas Neue', sans-serif",
               fontWeight: 400, letterSpacing: '0.08em', textDecoration: 'none',
@@ -88,11 +110,11 @@ function Nav() {
               opacity: menuOpen ? 1 : 0,
               transitionDelay: `${i * 50 + 80}ms`,
             }}>
-            {l}
+            {label}
           </a>
         ))}
         <div style={{ marginTop: 32, opacity: menuOpen ? 1 : 0, transition: 'opacity 0.3s 0.3s' }}>
-          <BtnPrimary size="lg" onClick={() => setMenuOpen(false)}>Solicita Demo</BtnPrimary>
+          <BtnPrimary size="lg" onClick={() => { setMenuOpen(false); openWA(WA_MSGS.reunion); }}>Agenda una cita</BtnPrimary>
         </div>
       </div>
 
@@ -123,7 +145,7 @@ function LogoMark({ size = 1 }) {
 function Hero() {
   const isMobile = useIsMobile();
   return (
-    <section style={{
+    <section id="producto" style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center', textAlign: 'center',
       padding: isMobile ? '100px 20px 60px' : '120px 24px 80px',
@@ -172,10 +194,12 @@ function Hero() {
           alignItems: 'center',
         }}>
           <BtnPrimary size={isMobile ? 'md' : 'lg'}
+            onClick={() => openWA(WA_MSGS.reunion)}
             style={isMobile ? { width: '100%', maxWidth: 340 } : {}}>
             Agenda una cita ahora <ModuleIcon icon="arrow" color="#fff" />
           </BtnPrimary>
           <BtnOutline size={isMobile ? 'md' : 'lg'}
+            onClick={() => { document.getElementById('como-funciona')?.scrollIntoView({ behavior: 'smooth' }); }}
             style={isMobile ? { width: '100%', maxWidth: 340 } : {}}>
             Ver cómo funciona
           </BtnOutline>
@@ -393,7 +417,7 @@ function Modules() {
     { icon: 'star',  color: C.orange, title: 'Feedback en Tiempo Real',desc: 'Dale la oportunidad a tus clientes de compartir su experiencia en tiempo real contigo. Te aportará útiles insights.' },
   ];
   return (
-    <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1100, margin: '0 auto' }}>
+    <section id="modulos" style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1100, margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: isMobile ? 36 : 56 }}>
         <SectionLabel>Módulos</SectionLabel>
         <h2 style={{ fontFamily: "'Bebas Neue', sans-serif",
@@ -477,7 +501,7 @@ function HowItWorks() {
     { n: '04', icon: 'star',  color: C.amber,  title: 'Interactúa y consume',desc: 'Juega, vota, pide y disfruta. Tu bar, potenciado.' },
   ];
   return (
-    <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
+    <section id="como-funciona" style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
       <SectionLabel>Cómo funciona</SectionLabel>
       <h2 style={{ fontFamily: "'Bebas Neue', sans-serif",
         fontSize: isMobile ? '1.9rem' : 'clamp(22px, 2.8vw, 38px)',
@@ -517,7 +541,7 @@ function HowItWorks() {
 function Benefits() {
   const isMobile = useIsMobile();
   const items = [
-    { n: '↑ Ticket',   label: 'promedio por mesa',  color: C.green },
+    { n: '↑ Consumo',   label: 'promedio por mesa',  color: C.green },
     { n: '↑ Tiempo',   label: 'de permanencia',     color: C.orange },
     { n: '+ Ingresos', label: 'fuentes nuevas',     color: C.pink },
     { n: '↑ Fidelidad',label: 'del cliente',        color: C.cyan },
@@ -555,14 +579,16 @@ function Pricing() {
   const isMobile = useIsMobile();
   const plans = [
     { name: 'Standard', color: C.fg3,   border: C.border,                glow: 'none',
-      features: ['Módulos básicos', 'Módulo administrativo básico','Capacitación al personal 2h', 'Soporte básico'] },
+      features: ['Acceso a módulos básicos +4', 'Acceso a consola administrativa básica','Capacitación virtual + tutoriales', 'Soporte básico'] },
     { name: 'Plus',     color: C.orange, border: 'rgba(168,85,247,0.5)', popular: true,
-      features: ['Módulos básicos', 'Módulo administrativo completo', 'Ofertas relámpago', 'Soporte prioritario'] },
-    { name: 'Premium',  color: C.amber,  border: 'rgba(245,158,11,0.5)',
-      features: ['Todos los módulos y acceso a módulos anticipados', 'Mesas ilimitadas', 'Consola DJ', 'Onboarding dedicado'] },
+      features: ['Todo lo incluido en el plan standard', 'Acceso a todos los módulos', 'Módulo administrativo completo', 'Soporte por mensajería 24/7'] },
+    { name: 'Pro',  color: C.amber,  border: 'rgba(245,158,11,0.5)',
+      features: ['Todo lo incluido en el plan plus', 'Acceso a funciones especiales', 'Personalización avanzada','Capacitación avanzada', 'Soporte por llamadas 24/7'] },
+    { name: 'Enterprise',  color: C.cyan,  border: 'rgb(0, 179, 238)',
+      features: ['Solución a medida de tu empresa', 'Estudio de modelo de negocio', 'Asesoría estratégica', 'Onboarding dedicado'] }
   ];
   return (
-    <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
+    <section id="planes" style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
       <SectionLabel color="amber">Planes</SectionLabel>
       <h2 style={{ fontFamily: "'Bebas Neue', sans-serif",
         fontSize: isMobile ? '1.9rem' : 'clamp(22px, 2.8vw, 38px)',
@@ -571,7 +597,7 @@ function Pricing() {
       </h2>
       <p style={{ color: C.fg3, fontSize: 14, marginBottom: isMobile ? 32 : 48 }}>Sin letras pequeñas. Sin contratos largos.</p>
       <div style={{ display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
         gap: isMobile ? 16 : 20 }}>
         {plans.map((p, i) => (
           <div key={i} style={{
@@ -599,8 +625,8 @@ function Pricing() {
               ))}
             </div>
             {p.popular
-              ? <BtnPrimary style={{ width: '100%' }}>Empezar</BtnPrimary>
-              : <BtnOutline style={{ width: '100%', borderColor: `${p.color}50` }}>Empezar</BtnOutline>}
+              ? <BtnPrimary style={{ width: '100%' }} onClick={() => openWA(WA_MSGS.plan(p.name))}>Empezar</BtnPrimary>
+              : <BtnOutline style={{ width: '100%', borderColor: `${p.color}50` }} onClick={() => openWA(WA_MSGS.plan(p.name))}>Empezar</BtnOutline>}
           </div>
         ))}
       </div>
@@ -635,12 +661,14 @@ function CTABanner() {
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center',
           flexDirection: isMobile ? 'column' : 'row', alignItems: 'center' }}>
           <BtnPrimary size={isMobile ? 'md' : 'lg'}
+            onClick={() => openWA(WA_MSGS.reunion)}
             style={isMobile ? { width: '100%', maxWidth: 320 } : {}}>
-            Solicita una Demo
+            Solicita una cotización
           </BtnPrimary>
           <BtnOutline size={isMobile ? 'md' : 'lg'}
+            onClick={() => openWA(WA_MSGS.asesor)}
             style={isMobile ? { width: '100%', maxWidth: 320 } : {}}>
-            Empieza Gratis
+            Contactar un asesor
           </BtnOutline>
         </div>
       </div>
