@@ -143,7 +143,7 @@ function Hero() {
         <div style={{ marginBottom: 24 }}>
           <Badge color="purple">
             <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%',
-              background: C.green, boxShadow: `0 0 6px ${C.green}`, marginRight: 6,
+              background: C.green, boxShadow: `0 0 6px ${C.white}`, marginRight: 6,
               animation: 'pulse 1.5s ease-in-out infinite' }} />
             Disponible en Perú y LATAM
           </Badge>
@@ -173,7 +173,7 @@ function Hero() {
         }}>
           <BtnPrimary size={isMobile ? 'md' : 'lg'}
             style={isMobile ? { width: '100%', maxWidth: 340 } : {}}>
-            Empieza Gratis · 3 Meses <ModuleIcon icon="arrow" color="#fff" />
+            Agenda una cita ahora <ModuleIcon icon="arrow" color="#fff" />
           </BtnPrimary>
           <BtnOutline size={isMobile ? 'md' : 'lg'}
             style={isMobile ? { width: '100%', maxWidth: 340 } : {}}>
@@ -183,7 +183,7 @@ function Hero() {
 
         <div style={{ marginTop: 40, display: 'flex', gap: isMobile ? 20 : 32,
           justifyContent: 'center', flexWrap: 'wrap' }}>
-          {[['100%', 'Mobile-first'], ['Sin', 'hardware extra'], ['Sesiones', 'persistentes'], ['+7', 'módulos']].map(([val, lab]) => (
+          {[['100%', 'Mobile-first'], ['Sin', 'hardware extra'], ['Sesiones', 'realtime'], ['+7', 'módulos']].map(([val, lab]) => (
             <div key={lab} style={{ textAlign: 'center', minWidth: 64 }}>
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 18,
                 background: sharedStyles.gradCTA, WebkitBackgroundClip: 'text',
@@ -293,7 +293,7 @@ function Problem() {
     { icon: '📋', text: 'Dependes de papel, voz e improvisación' },
     { icon: '😶', text: 'Sin interacción real con tus clientes' },
     { icon: '🏳️', text: 'Sin diferenciación frente a la competencia' },
-    { icon: '🔇', text: 'No tienes datos de qué quiere cada mesa' },
+    { icon: '🔇', text: 'No tienes conocimiento de las preferencias de tus clientes' },
   ];
   return (
     <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1100, margin: '0 auto' }}>
@@ -384,13 +384,13 @@ function FeatureCard({ icon, color, title, desc }) {
 function Modules() {
   const isMobile = useIsMobile();
   const modules = [
-    { icon: 'games', color: C.orange, title: 'Juegos +18',            desc: 'Verdad o reto, ruleta y más. Rompen el hielo, generan consumo.' },
-    { icon: 'chat',  color: C.cyan,   title: 'Chat en Vivo',          desc: 'Comunicación entre clientes, staff y DJ. Sistema VIP con propinas.' },
-    { icon: 'music', color: C.pink,   title: 'Música Interactiva',    desc: 'Votación de playlist, solicitudes al DJ. Opcional: monetización.' },
+    { icon: 'games', color: C.orange, title: 'Juegos +18',            desc: 'Accedes a un catálogo de juegos para bares con retos divertidos que impulsan las ventas de tu local.' },
+    { icon: 'chat',  color: C.cyan,   title: 'Chat en Vivo',          desc: 'Accedes a un chat interactivo con un nombre anónimo y puedes participar en conversaciones con otros clientes. Cuenta con sistema VIP para generar propinas.' },
+    { icon: 'music', color: C.pink,   title: 'Música Interactiva',    desc: 'Votación de género propuesto por el DJ o un moderador, Pedidos musicales. Opcional: monetización.' },
     { icon: 'mic',   color: C.amber,  title: 'Karaoke Digital',       desc: 'Gestión de turnos sin papel ni caos. Ágil, ordenado, divertido.' },
     { icon: 'bell',  color: C.green,  title: 'Atención Inmediata',    desc: 'Llamar al mozo o hacer pedidos express desde la mesa.' },
-    { icon: 'audio', color: C.cyan,   title: 'Audios Virales',        desc: 'Mensajes personalizados con voz estilo celebridades. Compartible.' },
-    { icon: 'star',  color: C.orange, title: 'Feedback en Tiempo Real',desc: 'Calificaciones, opiniones y métricas clave del negocio.' },
+    { icon: 'audio', color: C.cyan,   title: 'Audios Virales',        desc: 'Accede a una lista de audios descargables con voces de famosos recomendando ir a tu local. Compartible.' },
+    { icon: 'star',  color: C.orange, title: 'Feedback en Tiempo Real',desc: 'Dale la oportunidad a tus clientes de compartir su experiencia en tiempo real contigo. Te aportará útiles insights.' },
   ];
   return (
     <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 1100, margin: '0 auto' }}>
@@ -555,11 +555,11 @@ function Pricing() {
   const isMobile = useIsMobile();
   const plans = [
     { name: 'Standard', color: C.fg3,   border: C.border,                glow: 'none',
-      features: ['Módulos esenciales', 'Hasta 5 mesas', 'Soporte básico'] },
+      features: ['Módulos básicos', 'Módulo administrativo básico','Capacitación al personal 2h', 'Soporte básico'] },
     { name: 'Plus',     color: C.orange, border: 'rgba(168,85,247,0.5)', popular: true,
-      features: ['Todos los módulos', 'Hasta 20 mesas', 'Ofertas relámpago', 'Soporte prioritario'] },
+      features: ['Módulos básicos', 'Módulo administrativo completo', 'Ofertas relámpago', 'Soporte prioritario'] },
     { name: 'Premium',  color: C.amber,  border: 'rgba(245,158,11,0.5)',
-      features: ['Todo en Plus', 'Mesas ilimitadas', 'Consola DJ', 'Onboarding dedicado'] },
+      features: ['Todos los módulos y acceso a módulos anticipados', 'Mesas ilimitadas', 'Consola DJ', 'Onboarding dedicado'] },
   ];
   return (
     <section style={{ padding: isMobile ? '64px 20px' : '100px 24px', maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
@@ -567,9 +567,9 @@ function Pricing() {
       <h2 style={{ fontFamily: "'Bebas Neue', sans-serif",
         fontSize: isMobile ? '1.9rem' : 'clamp(22px, 2.8vw, 38px)',
         lineHeight: 1.15, marginBottom: 12, color: '#fff' }}>
-        Elige tu plan.<br /><GradientText>Empieza gratis por 3 meses.</GradientText>
+        Elige tu plan.<br /><GradientText>Obten un descuento de 50% los primeros 3 meses.</GradientText>
       </h2>
-      <p style={{ color: C.fg3, fontSize: 14, marginBottom: isMobile ? 32 : 48 }}>Sin tarjeta de crédito. Sin contratos largos.</p>
+      <p style={{ color: C.fg3, fontSize: 14, marginBottom: isMobile ? 32 : 48 }}>Sin letras pequeñas. Sin contratos largos.</p>
       <div style={{ display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
         gap: isMobile ? 16 : 20 }}>
